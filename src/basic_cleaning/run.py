@@ -5,7 +5,7 @@ Download from W&B the raw dataset and apply some basic data cleaning, exporting 
 import argparse
 import logging
 import wandb
-
+import pandas as pd
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -36,7 +36,7 @@ def go(args):
 
     # Save clean data
     logger.info("Saving clean data")
-    clean_sample.csv(df.to_csv("clean_sample.csv", index=False)
+    df.to_csv("clean_sample.csv", index=False)
 
     # Upload clean data to wandb
     logger.info("Uploading clean data")
