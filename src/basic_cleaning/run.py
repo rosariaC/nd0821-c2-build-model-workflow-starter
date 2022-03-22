@@ -20,15 +20,37 @@ def go(args):
     # particular version of the artifact
     # artifact_local_path = run.use_artifact(args.input_artifact).file()
 
-    ######################
-    # YOUR CODE HERE     #
-    ######################
+    run = wandb.init(project="nyc_airbnb", job_type="basic_cleaning")
+    logger.info("Downloading and reading artifact")
+    artifact_local_path = run.use_artifact(args.input_artifact).file()
+    df = pd.read_csv(artifact_local_path)
+
+    # Drop price outliers
+    logger.info("Dropping price outliers")
+    idx = df['price'].between(args.min_price, args.max_price)
+    df = df[idx].copy()
+
+    # Convert last_review to datetime
+    logger.info("Changing last_review attribute to datetime format")
+    df['last_review'] = pd.to_datetime(df['last_review'])
+
+    # Save clean data
+    logger.info("Saving clean data")
+    clean_sample.csv(df.to_csv("clean_sample.csv", index=False)
+
+    # Upload clean data to wandb
+    logger.info("Uploading clean data")
+    artifact = wandb.Artifact(args.output_artifact,
+                              type=args.output_type,
+                              description=args.output_description)
+    artifact.add_file("clean_sample.csv")
+    run.log_artifact(artifact)
+
+    run.finish()
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="A very basic data cleaning")
-
 
     parser.add_argument(
         "--input_artifact", 
