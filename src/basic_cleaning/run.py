@@ -34,6 +34,10 @@ def go(args):
     logger.info("Changing last_review attribute to datetime format")
     df['last_review'] = pd.to_datetime(df['last_review'])
 
+    # Only use locations within the specified boundary
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx].copy()
+
     # Save clean data
     logger.info("Saving clean data")
     df.to_csv("clean_sample.csv", index=False)
