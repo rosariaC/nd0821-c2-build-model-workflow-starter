@@ -1,4 +1,4 @@
-Github: https://github.com/rosariaC/nd0821-c2-build-model-workflow-starter
+Github: https://github.com/rosariaC/nd0821-c2-build-model-workflow-starter  
 wandb: https://wandb.ai/rosaria/nyc_airbnb?workspace=user-rosaria
 
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
